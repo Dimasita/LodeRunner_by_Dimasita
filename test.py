@@ -76,6 +76,11 @@ def main() -> None:
         for ch in ['<', '>', '{', '}', '⋜', '⋝', 'Э', 'Є', '⊣', '⊢']:
             if ch in map_string:
                 map_string = map_string.replace(ch, '~')
+                
+        def void_reform(map_string):
+        for ch in ['«', '»', '$', '&', '@', ']', '[', ')', '(', '⊛', 'S', '◄', '►']:
+            if ch in map_string:
+                map_string = map_string.replace(ch, ' ')
     
     coords = {}
 
