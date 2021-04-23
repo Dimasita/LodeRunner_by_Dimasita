@@ -1,7 +1,7 @@
 from math import sqrt
 
-from loderunnerclient.internals.element import Element
-from loderunnerclient.internals.point import Point
+from internals.element import Element
+from internals.point import Point
 
 
 class Board:
@@ -207,7 +207,8 @@ class Board:
         return _near_count
 
     def print_board(self):
-        print(self._line_by_line())
+        # print(self._line_by_line())
+        pass
 
     def _line_by_line(self):
         return "\n".join(

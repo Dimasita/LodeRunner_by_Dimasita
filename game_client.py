@@ -2,8 +2,8 @@ import logging
 
 import websocket
 from websocket import WebSocketConnectionClosedException
-from loderunnerclient.internals.actions import LoderunnerAction
-from loderunnerclient.internals.board import Board
+from internals.actions import LoderunnerAction
+from internals.board import Board
 
 logger = logging.getLogger(__name__)
 websocket.default_timeout = 3600
