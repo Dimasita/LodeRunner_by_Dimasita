@@ -23,6 +23,36 @@ ALL ANOTHER FOR THE FIRST TICK - EMPTY
 
 
 @benchmark
+def ladders_reform(map_str: str) -> str:
+    for ch in ['Q', 'Y', 'U']:
+        if ch in map_str:
+            map_str = map_str.replace(ch, 'H')
+    return map_str
+
+
+@benchmark
+def pipe_reform(map_str: str) -> str:
+    for ch in ['<', '>', '{', '}', 'Э', 'Є']:
+        if ch in map_str:
+            map_str = map_str.replace(ch, '~')
+    return map_str
+
+
+@benchmark
+def void_reform(map_str):
+    for ch in ['«', '»', '$', '&', '@', ']', '[', ')', '(', '⊛', 'S', '◄', '►']:
+        if ch in map_str:
+            map_str = map_str.replace(ch, ' ')
+    return map_str
+
+
+@benchmark
+def reform(map_str: str) -> str:
+    map_str = map_str.lstrip("board=")
+    return ladders_reform(pipe_reform(void_reform(map_str)))
+
+
+@benchmark
 def main() -> None:
     map_string = 'board=☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼' \
                  '      (    ►                 ~~~~~~~~~     &     ~~~~~~~☼☼##H########################H#H' \
@@ -61,22 +91,13 @@ def main() -> None:
                  '        H☼☼H   H      @                Q(    (  H        H   (   @H☼☼H  ####H######         ' \
                  '#####H########H##      H#####   H☼☼H      H      H#######H        (              H     (  H☼☼#' \
                  '#############H       H#################################☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼' \
-                 '☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼'.lstrip("board=")
-
+                 '☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼'
+    reform(map_string)
+    print(map_string)
     # Single coord = { (i, j): sign }
     # (0, 0), (0, board_side_length), (board_side_length, 0),
     #   (board_side_length, board_side_length) - unused (map edges)
-    
-        def ladders_reform(map_string):
-        for ch in ['Q', 'Y', 'U', '#']:
-            if ch in map_string:
-                map_string = map_string.replace(ch, 'H')
 
-    def pipe_reform(map_string):
-        for ch in ['<', '>', '{', '}', '⋜', '⋝', 'Э', 'Є', '⊣', '⊢']:
-            if ch in map_string:
-                map_string = map_string.replace(ch, '~')
-    
     coords = {}
 
     board_cells_count = len(map_string)
