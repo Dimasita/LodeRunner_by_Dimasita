@@ -66,6 +66,17 @@ def main() -> None:
     # Single coord = { (i, j): sign }
     # (0, 0), (0, board_side_length), (board_side_length, 0),
     #   (board_side_length, board_side_length) - unused (map edges)
+    
+        def ladders_reform(map_string):
+        for ch in ['Q', 'Y', 'U', '#']:
+            if ch in map_string:
+                map_string = map_string.replace(ch, 'H')
+
+    def pipe_reform(map_string):
+        for ch in ['<', '>', '{', '}', '⋜', '⋝', 'Э', 'Є', '⊣', '⊢']:
+            if ch in map_string:
+                map_string = map_string.replace(ch, '~')
+    
     coords = {}
 
     board_cells_count = len(map_string)
