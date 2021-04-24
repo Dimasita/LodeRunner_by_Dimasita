@@ -4,6 +4,7 @@ import websocket
 from websocket import WebSocketConnectionClosedException
 from internals.actions import LoderunnerAction
 from internals.board import Board
+from test import check_map
 
 logger = logging.getLogger(__name__)
 websocket.default_timeout = 3600
@@ -32,6 +33,8 @@ class GameClient:
             self.socket.run_forever(ping_interval=60)
 
     def on_message(self, ws, message):
+        check_map(message.lstrip("board="))
+        self.socket.close()
         board = Board(message.lstrip("board="))
         board.print_board()
         action = self.on_turn(board)
