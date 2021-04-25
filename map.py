@@ -53,7 +53,7 @@ class Map:
         s = iter(self.base_map_string)
         for y in range(self.map_side_length):
             for x in range(self.map_side_length):
-                if next(s) == '$':
+                if next(s) == '$&@':
                     coords.append((x, y))
         return coords
 

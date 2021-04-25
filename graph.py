@@ -7,6 +7,10 @@ class Edge:
         self.verticals = []
         self.horizontals = []
 
+    def clear(self) -> None:
+        self.verticals = []
+        self.horizontals = []
+
     def add_horizontal(self, points: set[(int, int)]) -> None:
         self.horizontals.append(self.Horizontal(points))
 
