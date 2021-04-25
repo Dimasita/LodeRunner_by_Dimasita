@@ -16,6 +16,12 @@ class Map:
         if 'Ѡ' in self.base_map_string:
             return False
 
+    def is_can_drill(self, x, y) -> bool:
+        coord = y * self.map_side_length + x
+        if self.reformed_map_string[coord] == '#':
+            return True
+        return False
+
     @staticmethod
     def ladders_reform(map_str: str) -> str:
         for ch in ['Q', 'Y', 'U']:
@@ -53,7 +59,7 @@ class Map:
         s = iter(self.base_map_string)
         for y in range(self.map_side_length):
             for x in range(self.map_side_length):
-                if next(s) == '$&@':
+                if next(s) in '$&@':
                     coords.append((x, y))
         return coords
 
