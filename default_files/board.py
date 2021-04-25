@@ -1,7 +1,7 @@
 from math import sqrt
 
-from internals.element import Element
-from internals.point import Point
+from element import Element
+from point import Point
 
 
 class Board:

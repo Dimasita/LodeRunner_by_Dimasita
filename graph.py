@@ -7,6 +7,7 @@ class Edge:
         self.verticals = []
         self.horizontals = []
 
+    # :Todo: need clear just mutable fields (user, enemies, bags)
     def clear(self) -> None:
         self.verticals = []
         self.horizontals = []
@@ -73,6 +74,7 @@ class Edge:
                     self.horizontals[index].has_enemies = True
                     break
             else:
+                # :Todo: create horizontal field or something and record there
                 offset = 0
                 while True:
                     is_needed_break = False
