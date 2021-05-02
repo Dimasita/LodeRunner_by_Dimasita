@@ -1,12 +1,9 @@
-from decorators import benchmark
 from connect import GameClient
-from graph import Edge
-from map import Map
+from funcs import new_msg
 
 
 def main():
-    # gcb = GameClient('https://dojorena.io/codenjoy-contest/board/player/dojorena390?code=7695259786981933783')
-    gcb = GameClient('ws://localhost')
+    gcb = GameClient('ws://localhost:3000', new_msg)
 
 
 if __name__ == '__main__':
