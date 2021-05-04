@@ -7,13 +7,13 @@ def benchmark(i: int = 1):
             min_time = 0
             max_time = 0
             total_time = 0
-            for _ in range(i):
+            for j in range(i):
                 start = time.time()
                 return_value = func(*args, **kwargs)
                 end = time.time()
                 single_time = end - start
 
-                if i == 0:
+                if j == 0:
                     min_time = single_time
                     max_time = single_time
                 else:
@@ -23,9 +23,12 @@ def benchmark(i: int = 1):
                         max_time = single_time
 
                 total_time += single_time
-            print(f'Min время выполнения: {min_time} секунд.')
-            print(f'Avg время выполнения: {total_time / i} секунд ({i} iterations).')
-            print(f'Max время выполнения: {max_time} секунд.')
+            if i == 1:
+                print(f'Время выполнения: {min_time} секунд.')
+            else:
+                print(f'Min время выполнения: {min_time} секунд.')
+                print(f'Avg время выполнения: {total_time / i} секунд ({i} iterations).')
+                print(f'Max время выполнения: {max_time} секунд.')
 
             return return_value
         return wrapper

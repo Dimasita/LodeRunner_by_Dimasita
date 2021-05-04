@@ -1,18 +1,17 @@
-from typing import Optional
-
 import websocket
 from board import Board
+from typing import Optional
 
 websocket.default_timeout = 3600
 
 
 class GameClient:
     board: Optional[Board]
-    set_action: callable([[Board], str])
+    get_action: callable([[Board], str])
 
     def __init__(self, url, func):
-        self.set_action = func
         self.board = None
+        self.get_action = func
 
         self.socket = websocket.WebSocketApp(
             url,
@@ -28,7 +27,7 @@ class GameClient:
             self.board = Board(message)
         else:
             self.board(message)
-        self._send(self.set_action(self.board))
+        self._send(self.get_action(self.board))
 
     def _send(self, msg):
         self.socket.send(msg)
