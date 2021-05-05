@@ -163,7 +163,7 @@ class Graph:
 
     def _get_distances_to_adjacent_edges(self, points_of_intersecting_with_adjacent_edges: list[(int, (int, int))],
                                          current_coordinates: (int, int), coordinate_axis: int,
-                                         base_distance=0, is_first_iter=False,
+                                         base_distance=0, is_first_iter=False, reverse=True,
                                          start_edge_index=None) -> list[tuple, int]:
         coordinates_with_distances = list()
 
@@ -186,19 +186,25 @@ class Graph:
                         lst[1] += 1
                         coordinates_with_distances[i] = lst
 
-        coordinates_with_distances.sort(key=lambda x: x[1], reverse=True)
+        coordinates_with_distances.sort(key=lambda x: x[1], reverse=reverse)
         return coordinates_with_distances
 
     def _get_best_way_to_bag(self, bag: (int, (int, int))) -> list[(int, int)]:
         queue = list()  # for child - ((index, (x, y)), distance)
         used: list[int] = []
-        last_item: int
+        last_item: int = -1
 
         vertical = self._get_vertical_with_specific_bag(bag[1])
         used.append(vertical)
 
-        ways = self._get_distances_to_adjacent_edges(self.verticals[vertical].intersecting_points,
-                                                     bag[1], 1, is_first_iter=True, start_edge_index=vertical)
+        ways = self._get_distances_to_adjacent_edges(
+            self.verticals[vertical].intersecting_points,
+            bag[1],
+            1,
+            is_first_iter=True,
+            start_edge_index=vertical,
+            reverse=False
+        )
         for w in ways:
             queue.append((w, 0))
 
@@ -244,8 +250,13 @@ class Graph:
                         pass
                     continue
 
-                ways = self._get_distances_to_adjacent_edges(self.horizontals[index].intersecting_points,
-                                                             coord, 0, base_distance)
+                ways = self._get_distances_to_adjacent_edges(
+                    self.horizontals[index].intersecting_points,
+                    coord,
+                    0,
+                    base_distance,
+                    reverse=False
+                )
                 for w in ways:
                     queue.append((w, q_index - 1))
 
@@ -271,8 +282,14 @@ class Graph:
                 coord = q[0][0][1]
                 base_distance = q[0][1]
 
-                ways = self._get_distances_to_adjacent_edges(self.verticals[index].intersecting_points,
-                                                             coord, 1, base_distance, start_edge_index=index)
+                ways = self._get_distances_to_adjacent_edges(
+                    self.verticals[index].intersecting_points,
+                    coord,
+                    1,
+                    base_distance,
+                    start_edge_index=index,
+                    reverse=False
+                )
                 for w in ways:
                     queue.append((w, q_index - 1))
 
@@ -280,6 +297,9 @@ class Graph:
                     q = next(q_iter)
 
         steps = []
+        if last_item == -1:
+            raise IndexError
+
         next_step = last_item
         steps.append(queue[next_step][0][0][1])
         not_first_iter = False
